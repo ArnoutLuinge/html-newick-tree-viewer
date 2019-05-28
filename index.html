@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html>	
+	<head>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	
+		<title>Newick parser</title>
+		
+	</head>
+	
+	<body>
+		<div>
+			<ul>
+			  <li><a href="index.html">Home</a></li>
+			  <li><a href="news.html">News</a></li>
+			  <li><a href="contact.html">Contact</a></li>
+			  <li><a href="about.html">About</a></li>
+			</ul>
+		</div>
+		
+		<div>
+			<div class='toolbar'>
+				<input type="file" name="fileupload" value="fileupload" id="fileupload">
+				<button>Import tree</button>
+				<button>Save tree</button>
+			</div>
+			<div class='newick_text'>
+				<button onclick="showTree()">Show tree</button>
+				<input id='newick_text_input' type='text' value='a,b' ></input>
+			</div>
+			<div class='tree_display'>
+				<h1 id="test_text"></h1>
+				
+				<canvas id="drawing_canvas">
+				Your browser does not support the HTML5 canvas tag.</canvas>
+			</div>
+		</div>
+	</body>
+	
+	<script src="newick_builder.js"></script>
+</html>
