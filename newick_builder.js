@@ -13,14 +13,41 @@ function showTree(){
 }
 
 function drawTree(){
-
-//	ctx.stroke();
+	var newick = document.getElementById("newick_text_input").value;
+	var openBracePlace = [];
+	var closeBracePlace = [];
+	
+	for (var i = 0; i < newick.length; i++) {
+		if((newick.charAt(i)) == "(") {
+//			alert(newick.charAt(i));
+			openBracePlace = openBracePlace.concat([i]);
+		}
+		if((newick.charAt(i)) == ")") {
+			closeBracePlace = closeBracePlace.concat([i]);
+		}
+	}
+	
+	if (openBracePlace.length != closeBracePlace.length){
+		document.getElementById("newick_text_input").style = "border: 1px solid red;";
+		console.log("%cINVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!", 'color: red;')
+	} else if (openBracePlace.length == closeBracePlace.length){
+		document.getElementById("newick_text_input").style = "";
+	}
+	
+	for (var i = openBracePlace[0]; i < newick.length; i++) {
+		if((newick.charAt(i)) == "(") {
+//			alert(newick.charAt(i));
+			openBracePlace = openBracePlace.concat([i]);
+		}
+	}
+	
+	drawTest();
 }
 
 function loadDefault(){
 	document.getElementById("newick_text_input").value = defaultTree;
 	
-	showtree();
+	showTree();
 }
 
 function drawRaster(){
@@ -50,9 +77,10 @@ function drawTest(){
 	var c = document.getElementById("drawing_canvas");
 	var ctx = c.getContext("2d");
 	ctx.beginPath();
-	ctx.moveTo(0.5, 50);
-	ctx.lineTo(30.5, 50);
+	ctx.moveTo(10.5, 50);
+	ctx.lineTo(80.5, 50);
 	ctx.lineWidth = 1;
+	ctx.strokeStyle = "#000";
 	ctx.fillText("x", 248, 43);
 	ctx.stroke();
 }
