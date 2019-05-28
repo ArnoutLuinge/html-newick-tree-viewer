@@ -41,8 +41,8 @@ li a:hover {
 }
 
 #newick_text_input{
-	padding: 1px;
-	padding-left: 10px;
+	padding: 5px;
+	margin-left: 10px;
 	background-color: #333;
 	color: white;
 	border: 1px solid gray;
@@ -50,12 +50,12 @@ li a:hover {
 }
 
 .tree_display{
+	margin-left: 5%;
+	margin-right: 5%;
 	background-color: white;
-	height: 35em;
+	width: 1200px;
 }
 
 #drawing_canvas{
-	width: 1000px;
-	height: 500px;
 	border: 1px solid #d3d3d3;
 }
