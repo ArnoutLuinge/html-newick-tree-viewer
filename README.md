@@ -14,4 +14,6 @@ Dowload all files and place them in the same folder. Opening the index.html will
 - [] add description
 - [] \
 \
-https://www.w3schools.com/jsref/jsref_obj_regexp.asp
+https://www.w3schools.com/jsref/jsref_obj_regexp.asp \
+https://regex101.com/ \
+https://diveintohtml5.info/canvas.html \
