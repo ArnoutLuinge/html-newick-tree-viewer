@@ -1,11 +1,11 @@
-var rasterLineWidth = 0.5;
-var defaultTree = "(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);";
+let rasterLineWidth = 0.5;
+let defaultTree = "(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);";
 
 drawRaster();
 
 function showTree(){
 	console.log('button pressed');
-	var x = document.getElementById("newick_text_input").value;
+	let x = document.getElementById("newick_text_input").value;
 
 	document.getElementById("test_text").innerHTML = x;
 	
@@ -13,11 +13,11 @@ function showTree(){
 }
 
 function drawTree(){
-	var newick = document.getElementById("newick_text_input").value;
-	var openBracePlace = [];
-	var closeBracePlace = [];
+	let newick = document.getElementById("newick_text_input").value;
+	let openBracePlace = [];
+	let closeBracePlace = [];
 	
-	for (var i = 0; i < newick.length; i++) {
+	for (let i = 0; i < newick.length; i++) {
 		if((newick.charAt(i)) == "(") {
 //			alert(newick.charAt(i));
 			openBracePlace = openBracePlace.concat([i]);
@@ -34,7 +34,7 @@ function drawTree(){
 		document.getElementById("newick_text_input").style = "";
 	}
 	
-	for (var i = openBracePlace[0]; i < newick.length; i++) {
+	for (let i = openBracePlace[0]; i < newick.length; i++) {
 		if((newick.charAt(i)) == "(") {
 //			alert(newick.charAt(i));
 			openBracePlace = openBracePlace.concat([i]);
@@ -44,15 +44,11 @@ function drawTree(){
 	drawTest();
 }
 
-function loadDefault(){
-	document.getElementById("newick_text_input").value = defaultTree;
-	
-	showTree();
-}
+
 
 function drawRaster(){
-	var c = document.getElementById("drawing_canvas");
-	var ctx = c.getContext("2d");
+	let c = document.getElementById("drawing_canvas");
+	let ctx = c.getContext("2d");
 	
 	for (i = 0; i < 1000; (i = i+20)){
 		ctx.beginPath();
@@ -74,22 +70,30 @@ function drawRaster(){
 }
 
 function drawTest(){
-	var c = document.getElementById("drawing_canvas");
-	var ctx = c.getContext("2d");
+	let c = document.getElementById("drawing_canvas");
+	let ctx = c.getContext("2d");
+	
+	//cirkel op het beginpunt
 	ctx.beginPath();
-	ctx.moveTo(10.5, 50);
-	ctx.lineTo(80.5, 50);
+	ctx.moveTo(180, 200);
+	ctx.arc(180, 200, 3, 0, 2* Math.PI);
+	ctx.strokeStyle = "#000"
+	ctx.stroke();
+	
+	//eerste lijn
+	ctx.beginPath();
+	ctx.moveTo(180, 200);
+	ctx.lineTo(680, 200);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = "#000";
-	ctx.fillText("x", 248, 43);
 	ctx.stroke();
 }
 
 document.getElementById("input_file").addEventListener("change",function(){
-  var file = this.files[0];
+  let file = this.files[0];
 
   if (file) {
-      var reader = new FileReader();
+      let reader = new FileReader();
 
       reader.onload = function (evt) {
         console.log(evt);
@@ -102,6 +106,13 @@ document.getElementById("input_file").addEventListener("change",function(){
       };
 
       reader.readAsText(file, "UTF-8");
+	  let str = document.getElementById("newick_text_input").value;
+	  
 	  
     }
+	
 },false);
+
+function readNewick() {
+	let amount_branch = str.(?<=\()(.*)(?=>\));
+}
