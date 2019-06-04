@@ -10,7 +10,7 @@ Use git clone\
 Dowload all files and place them in the same folder. Opening the index.html will open the website and load all necesary files.
 
 ## TODO
-- [ ]display the tree
+- [ ] display the tree
 - [ ] add description
 - [ ] add news/about/cotact page
 - [ ] \
