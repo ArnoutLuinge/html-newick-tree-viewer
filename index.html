@@ -28,11 +28,14 @@
 			<div class='newick_text'>
 				<button onclick="showTree()">Show tree</button>
 				<input id='newick_text_input' type='text' value='' placeholder="Place you newick code here" ></input>
+				<button onclick="clearInput()">Clear input</button>
 			</div>
 
 			<div class='tree_display'>
-				<h1 id="test_text"></h1>
-				<p id="error_message"></p>
+				<div class="info">
+					<h1 id="test_text"></h1>
+					<p id="error_message"></p>
+				</div>
 				
 				<canvas id="drawing_canvas" width="1000" height="400">
 				Your browser does not support the HTML5 canvas tag.</canvas>

@@ -61,3 +61,13 @@ li a:hover {
 #drawing_canvas{
 	border: 1px solid #d3d3d3;
 }
+
+.info{
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+#error_message{
+	margin-top: 5px;
+	
+}

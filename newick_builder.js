@@ -138,14 +138,15 @@ function validateInput(){
 	if (newick == ""){
 		validationErrors++;
 		document.getElementById("error_message").innerHTML = "INVALID INPUT; newick input is empty!";
-		drawing_canvas.appendChild(linebreak);
+		error_message.appendChild(linebreak);
 		console.log("%cINVALID INPUT; newick input is empty!", 'color: red;')
 	}
 	
 	//Checking start with (
 	if (newick[0] != "("){
 		validationErrors++;
-		document.getElementById("error_message").innerHTML = "INVALID INPUT; newick input does not start with '('!";
+		document.getElementById("error_message").innerHTML += "INVALID INPUT; newick input does not start with '('!";
+		error_message.appendChild(linebreak);
 		console.log("%cINVALID INPUT; newick input does not start with '('!", 'color: red;')
 	} 
 	
@@ -153,6 +154,7 @@ function validateInput(){
 	if (((newick[newick.length -1]) != ";" )&& ((newick[newick.length -2]) != ")")){
 		validationErrors++;
 		document.getElementById("error_message").innerHTML += "INVALID INPUT; newick input does not end with ');'!";
+		error_message.appendChild(linebreak);
 		console.log("%cINVALID INPUT; newick input does not end with ');'!", 'color: red;')
 	}	
 	
@@ -171,7 +173,8 @@ function validateInput(){
 	
 	if (openBracePlace.length != closeBracePlace.length){
 		validationErrors++;
-		document.getElementById("error_message").innerHTML = "INVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!";
+		document.getElementById("error_message").innerHTML += "INVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!";
+		error_message.appendChild(linebreak);
 		console.log("%cINVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!", 'color: red;')
 	} 
 	
@@ -183,4 +186,9 @@ function validateInput(){
 		document.getElementById("newick_text_input").style = "border: 1px solid green;";
 		document.getElementById("error_message").style = "color: black;";
 	}
+}
+
+function clearInput(){
+	document.getElementById("newick_text_input").value = "";
+
 }
