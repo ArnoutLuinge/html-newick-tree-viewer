@@ -108,7 +108,6 @@ document.getElementById("input_file").addEventListener("change",function(){
       reader.readAsText(file, "UTF-8");
 	  let str = document.getElementById("newick_text_input").value;
 	  
-	  
     }
 	
 },false);
