@@ -12,7 +12,7 @@ Dowload all files and place them in the same folder. Opening the index.html will
 ## TODO
 - [ ] display the tree
 - [ ] add description
-- [ ] add news/about/cotact page
+- [ ] add news/about/contact page
 - [ ] \
 \
 https://www.w3schools.com/jsref/jsref_obj_regexp.asp \
