@@ -98,6 +98,17 @@ function drawTest(){
 	ctx.stroke();
 }
 
+
+document.getElementById('newick_text_input').onkeypress = function(e){
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+      // Enter pressed
+	  showTree();
+      return false;
+    }
+  }
+
 document.getElementById("input_file").addEventListener("change",function(){
   let file = this.files[0];
 
