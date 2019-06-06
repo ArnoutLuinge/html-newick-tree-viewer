@@ -1,7 +1,30 @@
 let rasterLineWidth = 0.5;
-let defaultTree = "(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);";
+let defaultTree = "(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5);";
 
 drawRaster();
+
+function getValues() {
+	
+	//step 1: filtering outer brackets outer brackets
+	const regex = /(?<=\()(.*)(?=\))/gm;
+	const str = document.getElementById("newick_text_input").value;
+	let step1;
+	
+	
+	while((step1 = regex.exec(str)) !== null) {
+		if (step1.index === regex.lastIndex) {
+			regex.lastIndex++;
+		}
+		
+		step1.forEach((match, groupIndex) => {
+			console.log(`Found match, group ${groupIndex}: ${match}`);
+		});
+	}
+	
+	//step 2: getting the first branches (splitting at comma's)
+	var step2 = match.split(",");
+	console.log(step2.length);	
+}	
 
 function showTree(){
 	console.log('button pressed');
@@ -9,6 +32,7 @@ function showTree(){
 
 	document.getElementById("test_text").innerHTML = x;
 	
+	getValues();
 	drawTree();	
 }
 
@@ -42,6 +66,12 @@ function drawTree(){
 	}
 	
 	drawTest();
+}
+
+function loadDefault() {
+	document.getElementById("newick_text_input").value = defaultTree;
+
+		showTree();
 }
 
 
@@ -108,10 +138,12 @@ document.getElementById("input_file").addEventListener("change",function(){
       reader.readAsText(file, "UTF-8");
 	  let str = document.getElementById("newick_text_input").value;
 	  
+	  
     }
 	
 },false);
 
 function readNewick() {
-	let amount_branch = str.(?<=\()(.*)(?=>\));
+	let amount_branch = new RegExp(!'()');
+	console.log(amount_branch);
 }
