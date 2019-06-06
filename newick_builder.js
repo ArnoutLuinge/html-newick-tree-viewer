@@ -18,12 +18,14 @@ function getValues() {
 		
 		step1.forEach((match, groupIndex) => {
 			console.log(`Found match, group ${groupIndex}: ${match}`);
+			step1 = match;
+			console.log(step1);
 		});
 	}
 	
 	//step 2: getting the first branches (splitting at comma's)
-	var step2 = match.split(",");
-	console.log(step2.length);	
+	//var step2 = step1.split(",");
+	//console.log(step2);	
 }	
 
 function showTree(){
@@ -32,38 +34,15 @@ function showTree(){
 
 	document.getElementById("test_text").innerHTML = x;
 	
+	validateInput();
 	getValues();
 	drawTree();	
 }
 
 function drawTree(){
-	let newick = document.getElementById("newick_text_input").value;
-	let openBracePlace = [];
-	let closeBracePlace = [];
+
 	
-	for (let i = 0; i < newick.length; i++) {
-		if((newick.charAt(i)) == "(") {
-//			alert(newick.charAt(i));
-			openBracePlace = openBracePlace.concat([i]);
-		}
-		if((newick.charAt(i)) == ")") {
-			closeBracePlace = closeBracePlace.concat([i]);
-		}
-	}
-	
-	if (openBracePlace.length != closeBracePlace.length){
-		document.getElementById("newick_text_input").style = "border: 1px solid red;";
-		console.log("%cINVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!", 'color: red;')
-	} else if (openBracePlace.length == closeBracePlace.length){
-		document.getElementById("newick_text_input").style = "";
-	}
-	
-	for (let i = openBracePlace[0]; i < newick.length; i++) {
-		if((newick.charAt(i)) == "(") {
-//			alert(newick.charAt(i));
-			openBracePlace = openBracePlace.concat([i]);
-		}
-	}
+
 	
 	drawTest();
 }
@@ -71,7 +50,7 @@ function drawTree(){
 function loadDefault() {
 	document.getElementById("newick_text_input").value = defaultTree;
 
-		showTree();
+	showTree();
 }
 
 
@@ -146,4 +125,62 @@ document.getElementById("input_file").addEventListener("change",function(){
 function readNewick() {
 	let amount_branch = new RegExp(!'()');
 	console.log(amount_branch);
+}
+
+function validateInput(){
+	console.log("Validating input...");
+	let newick = document.getElementById("newick_text_input").value;
+	let validationErrors = 0;
+	document.getElementById("error_message").innerHTML = "";
+	linebreak = document.createElement("br");
+	
+	//Checking if there is something in the input
+	if (newick == ""){
+		validationErrors++;
+		document.getElementById("error_message").innerHTML = "INVALID INPUT; newick input is empty!";
+		drawing_canvas.appendChild(linebreak);
+		console.log("%cINVALID INPUT; newick input is empty!", 'color: red;')
+	}
+	
+	//Checking start with (
+	if (newick[0] != "("){
+		validationErrors++;
+		document.getElementById("error_message").innerHTML = "INVALID INPUT; newick input does not start with '('!";
+		console.log("%cINVALID INPUT; newick input does not start with '('!", 'color: red;')
+	} 
+	
+	//Checking end with );
+	if (((newick[newick.length -1]) != ";" )&& ((newick[newick.length -2]) != ")")){
+		validationErrors++;
+		document.getElementById("error_message").innerHTML += "INVALID INPUT; newick input does not end with ');'!";
+		console.log("%cINVALID INPUT; newick input does not end with ');'!", 'color: red;')
+	}	
+	
+	//Checking opening/closing brackets
+	let openBracePlace = [];
+	let closeBracePlace = [];
+	
+	for (let i = 0; i < newick.length; i++) {
+		if((newick.charAt(i)) == "(") {
+			openBracePlace = openBracePlace.concat([i]);
+		}
+		if((newick.charAt(i)) == ")") {
+			closeBracePlace = closeBracePlace.concat([i]);
+		}
+	}
+	
+	if (openBracePlace.length != closeBracePlace.length){
+		validationErrors++;
+		document.getElementById("error_message").innerHTML = "INVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!";
+		console.log("%cINVALID INPUT; amount of opening brackets does not equal amount of closing brackets in newick input!", 'color: red;')
+	} 
+	
+	if (validationErrors > 0){
+		document.getElementById("newick_text_input").style = "border: 1px solid red;";
+		document.getElementById("error_message").style = "color: red;";
+	} else if (validationErrors == 0){
+		console.log("No validation errors found.")
+		document.getElementById("newick_text_input").style = "border: 1px solid green;";
+		document.getElementById("error_message").style = "color: black;";
+	}
 }
