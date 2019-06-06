@@ -98,7 +98,6 @@ function drawTest(){
 	ctx.stroke();
 }
 
-
 document.getElementById('newick_text_input').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
