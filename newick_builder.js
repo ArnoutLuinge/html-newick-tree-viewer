@@ -1,32 +1,29 @@
 let rasterLineWidth = 0.5;
 let defaultTree = "(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5);";
+let step2;
+let step1;
+const branch_distance = 35;
+const treeLineWidth = 2;
 
 drawRaster();
 
+
 function getValues() {
-	
+
 	//step 1: filtering outer brackets outer brackets
 	const regex = /(?<=\()(.*)(?=\))/gm;
-	const str = document.getElementById("newick_text_input").value;
-	let step1;
-	
-	
-	while((step1 = regex.exec(str)) !== null) {
-		if (step1.index === regex.lastIndex) {
-			regex.lastIndex++;
-		}
-		
-		step1.forEach((match, groupIndex) => {
-			console.log(`Found match, group ${groupIndex}: ${match}`);
-			step1 = match;
-			console.log(step1);
-		});
-	}
-	
-	//step 2: getting the first branches (splitting at comma's)
-	//var step2 = step1.split(",");
-	//console.log(step2);	
+	const str1 = document.getElementById("newick_text_input").value;
+
+	step1 = regex.exec(str1)
+	console.log("step1 string:", step1);
+	//de eerste takken eruit halen
+	const str2 = step1[0];
+	step2 = str2.split(/,(?![^()]*\))/gm);
+	console.log("step 2 string:", step2)
+
+
 }	
+
 
 function showTree(){
 	console.log('button pressed');
@@ -39,20 +36,70 @@ function showTree(){
 	drawTree();	
 }
 
+
 function drawTree(){
 
+	let treeArray = ["A:0.1","B:0.2",["C:0.3","D:0.4"],"E:0.5"];
+	console.log("treeArray:" + treeArray);
 	
+	let c = document.getElementById("drawing_canvas");
+	let ctx = c.getContext("2d");
+	
+	//cirkel op het beginpunt
+	ctx.beginPath();
+	ctx.moveTo(180, 200);
+	ctx.arc(180, 200, 3, 0, 2* Math.PI);
+	ctx.strokeStyle = "#000"
+	ctx.stroke();
+	
+	let amount_branches_start = step2.length;
+	console.log("amount branches:", amount_branches_start);
+	let line_length = branch_distance * amount_branches_start;
+	let start_point = 200 - (line_length / 2);
+	console.log("starting point", start_point);
 
+	//eerste lijn tekenen
+	ctx.beginPath();
+	ctx.moveTo(180, start_point);
+	ctx.lineTo(180, (start_point + line_length));
+	ctx.lineWidth = treeLineWidth;
+	ctx.strokeStyle = "#000";
+	ctx.stroke();
 	
-	drawTest();
+	for (i = 0; i <= treeArray.length; i++){
+		console.log("loop:" + i);
+		
+		const nameFilterRegex = /(.*)(?=:)/gm
+		const lengthFilterRegex = /(?<=:)(.*)/gm
+		let lineStr = treeArray[i];
+		let lineName = (nameFilterRegex.exec(lineStr))[0];
+		let lineLength = (lengthFilterRegex.exec(lineStr))[0];
+
+		console.log("lineName:" + lineName);
+		console.log("lineLength:" + lineLength);
+		
+		let lineLengthPx = (500*lineLength);
+		let lineHeightPx = (200+(i*10)); 
+		console.log("lineLengthPx:" + lineLengthPx);		
+		console.log("lineHeightPx:" + lineHeightPx);
+		
+		ctx.beginPath();
+		ctx.moveTo(180, lineHeightPx);
+		ctx.lineTo((180 + lineLengthPx), lineHeightPx);
+		ctx.lineWidth = 1;
+		ctx.strokeStyle = "#000";
+		ctx.stroke();
+		
+	}
+	
 }
+
 
 function loadDefault() {
 	document.getElementById("newick_text_input").value = defaultTree;
 
 	showTree();
 }
-
 
 
 function drawRaster(){
@@ -78,6 +125,7 @@ function drawRaster(){
 	}
 }
 
+
 function drawTest(){
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
@@ -98,6 +146,7 @@ function drawTest(){
 	ctx.stroke();
 }
 
+
 document.getElementById('newick_text_input').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
@@ -108,6 +157,7 @@ document.getElementById('newick_text_input').onkeypress = function(e){
     }
   }
 
+  
 document.getElementById("input_file").addEventListener("change",function(){
   let file = this.files[0];
 
@@ -132,10 +182,12 @@ document.getElementById("input_file").addEventListener("change",function(){
 	
 },false);
 
+
 function readNewick() {
 	let amount_branch = new RegExp(!'()');
 	console.log(amount_branch);
 }
+
 
 function validateInput(){
 	console.log("Validating input...");
@@ -197,6 +249,7 @@ function validateInput(){
 		document.getElementById("error_message").style = "color: black;";
 	}
 }
+
 
 function clearInput(){
 	document.getElementById("newick_text_input").value = "";
