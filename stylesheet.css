@@ -30,14 +30,14 @@ li a:hover {
 
 .toolbar{
 	margin: 5px;
-	padding:15px;
+	padding: 10px;
 	background-color: #222;
 
 }
 
 .newick_text{
 	margin: 5px;
-	padding:15px;
+	padding: 10px;
 	background-color: #222;
 }
 
@@ -70,4 +70,23 @@ li a:hover {
 #error_message{
 	margin-top: 5px;
 	
+}
+
+button, #input_file input{
+	border-radius: 5px;
+	border: 1.5px solid #016e01;
+	background-color: #444;
+	color: #fff;
+	padding: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin: 2px;
+	margin-left: 5px;
+	margin-right: 5px;
+	transition-duration: .3s;
+}
+
+button:hover{
+	border: 1.5px solid #08aa08;
+	box-shadow: 0px 0px 20px #ccc;
 }

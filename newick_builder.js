@@ -7,7 +7,7 @@ const treeLineWidth = 2;
 
 drawRaster();
 
-
+//spit en verwerk de newick input string
 function getValues() {
 
 	//step 1: filtering outer brackets outer brackets
@@ -24,7 +24,7 @@ function getValues() {
 
 }	
 
-
+//haal de input string op een reops de voldgende vuncties
 function showTree(){
 	console.log('button pressed');
 	let x = document.getElementById("newick_text_input").value;
@@ -36,12 +36,13 @@ function showTree(){
 	drawTree();	
 }
 
-
+//teken de boomm
 function drawTree(){
 
 	let treeArray = ["A:0.1","B:0.2",["C:0.3","D:0.4"],"E:0.5"];
 	console.log("treeArray:" + treeArray);
 	
+	//initialiseer het canvas
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
 	
@@ -58,7 +59,7 @@ function drawTree(){
 	let start_point = 200 - (line_length / 2);
 	console.log("starting point", start_point);
 
-	//eerste lijn tekenen
+	//eerste verticale lijn tekenen
 	ctx.beginPath();
 	ctx.moveTo(180, start_point);
 	ctx.lineTo(180, (start_point + line_length));
@@ -66,6 +67,7 @@ function drawTree(){
 	ctx.strokeStyle = "#000";
 	ctx.stroke();
 	
+	//horizontale lijnen tekenen
 	for (i = 0; i <= treeArray.length; i++){
 		console.log("loop:" + i);
 		
@@ -94,14 +96,14 @@ function drawTree(){
 	
 }
 
-
+//als je op de knop 'load default' klikt laadt hij de default tree in en laat hij hem zien
 function loadDefault() {
 	document.getElementById("newick_text_input").value = defaultTree;
 
 	showTree();
 }
 
-
+//hetv tekenen van een raster met 20px tussen de lijnen
 function drawRaster(){
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
@@ -125,7 +127,7 @@ function drawRaster(){
 	}
 }
 
-
+// een test cirkel een lijtjes tekenen
 function drawTest(){
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
@@ -146,7 +148,7 @@ function drawTest(){
 	ctx.stroke();
 }
 
-
+//als je in het input fiels op enter drukt klikt hij op de showtree knop
 document.getElementById('newick_text_input').onkeypress = function(e){
     if (!e) e = window.event;
     var keyCode = e.keyCode || e.which;
@@ -157,7 +159,7 @@ document.getElementById('newick_text_input').onkeypress = function(e){
     }
   }
 
-  
+//kijkt od er iets ij\n de file input zien endals dat zo laadt hij het bestand als text
 document.getElementById("input_file").addEventListener("change",function(){
   let file = this.files[0];
 
@@ -177,7 +179,6 @@ document.getElementById("input_file").addEventListener("change",function(){
       reader.readAsText(file, "UTF-8");
 	  let str = document.getElementById("newick_text_input").value;
 	  
-	  
     }
 	
 },false);
@@ -188,7 +189,7 @@ function readNewick() {
 	console.log(amount_branch);
 }
 
-
+//valideer de user input of er daadwerkelijk kloppende newick staat en geef relevenate foutmeldeinge aan de gebruiker
 function validateInput(){
 	console.log("Validating input...");
 	let newick = document.getElementById("newick_text_input").value;
@@ -250,8 +251,12 @@ function validateInput(){
 	}
 }
 
-
+//leeg het input field
 function clearInput(){
 	document.getElementById("newick_text_input").value = "";
+	
+	let c = document.getElementById("drawing_canvas");
+	let ctx = c.getContext("2d");
+	ctx.clearRect(0, 0, c.width, c.height);
 
 }
