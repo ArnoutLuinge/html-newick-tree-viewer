@@ -24,7 +24,7 @@ function getValues() {
 
 }	
 
-//haal de input string op een reops de voldgende vuncties
+//haal de input string op een reops de voldgende functies
 function showTree(){
 	console.log('button pressed');
 	let x = document.getElementById("newick_text_input").value;
@@ -33,13 +33,15 @@ function showTree(){
 	
 	validateInput();
 	getValues();
+	clearCanvas();
+	drawRaster();
 	drawTree();	
 }
 
 //teken de boomm
 function drawTree(){
 
-	let treeArray = ["A:0.1","B:0.2",["C:0.3","D:0.4"],"E:0.5"];
+	let treeArray = step2;
 	console.log("treeArray:" + treeArray);
 	
 	//initialiseer het canvas
@@ -66,9 +68,9 @@ function drawTree(){
 	ctx.lineWidth = treeLineWidth;
 	ctx.strokeStyle = "#000";
 	ctx.stroke();
-	
+		
 	//horizontale lijnen tekenen
-	for (i = 0; i <= treeArray.length; i++){
+	for (i = 0; i < treeArray.length; i++){
 		console.log("loop:" + i);
 		
 		const nameFilterRegex = /(.*)(?=:)/gm
@@ -81,13 +83,15 @@ function drawTree(){
 		console.log("lineLength:" + lineLength);
 		
 		let lineLengthPx = (500*lineLength);
-		let lineHeightPx = (200+(i*10)); 
+		let lineHeightPx = (200+(i*branch_distance));
 		console.log("lineLengthPx:" + lineLengthPx);		
 		console.log("lineHeightPx:" + lineHeightPx);
 		
 		ctx.beginPath();
 		ctx.moveTo(180, lineHeightPx);
 		ctx.lineTo((180 + lineLengthPx), lineHeightPx);
+		ctx.font = "15px Arial";
+		ctx.fillText((lineName), (190 + lineLengthPx), (lineHeightPx + 7));
 		ctx.lineWidth = 1;
 		ctx.strokeStyle = "#000";
 		ctx.stroke();
@@ -107,7 +111,7 @@ function loadDefault() {
 function drawRaster(){
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
-	
+		
 	for (i = 0; i < 1000; (i = i+20)){
 		ctx.beginPath();
 		ctx.moveTo(i, 0);
@@ -254,9 +258,12 @@ function validateInput(){
 //leeg het input field
 function clearInput(){
 	document.getElementById("newick_text_input").value = "";
-	
+		
+	clearCanvas();
+}
+
+function clearCanvas(){
 	let c = document.getElementById("drawing_canvas");
 	let ctx = c.getContext("2d");
 	ctx.clearRect(0, 0, c.width, c.height);
-
 }
