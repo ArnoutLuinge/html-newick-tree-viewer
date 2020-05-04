@@ -1,6 +1,5 @@
 # html-newick-tree-viewer
 
-http://newick-trees.rf.gd/  last updated:28/05/2019 22:53   (sometimes updated) 
 
 ## Description
 
